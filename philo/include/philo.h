@@ -1,0 +1,78 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        ::::::::            */
+/*   philo.h                                            :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: lbisscho <lbisscho@student.codam.nl>         +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2022/06/15 15:23:59 by lbisscho      #+#    #+#                 */
+/*   Updated: 2022/06/16 15:26:45 by lbisscho      ########   odam.nl         */
+/*                                                                            */
+/* ************************************************************************** */
+
+#ifndef PHILO_H
+# define PHILO_H
+
+# include <stdio.h>
+# include <stdlib.h>
+# include <pthread.h>
+# include <stdbool.h>
+# include <sys/time.h>
+#include <unistd.h>
+
+typedef struct s_table {
+                long start_time;
+                bool  *locked_forks;
+                pthread_mutex_t *forks;
+                pthread_t *threads;
+                pthread_mutex_t write;
+}               t_table;
+
+typedef struct s_philosopher {
+                t_table *tab;
+                int philo_id;
+                int left_fork;
+                int right_fork;
+                int total_philos;
+                int time_die;
+                int time_eat;
+                int time_sleep;
+                int times_to_eat;
+                int times_eaten;
+                long last_time_eaten;
+                long start_time;
+                bool times_to_eat_bool;
+                bool dead;
+                
+}               t_philosopher;
+
+
+typedef struct s_data {
+    t_philosopher  *philos;
+    t_table        table;
+    int            total_philos;
+    int start_time;
+}               t_data;
+
+//initilizing functions
+void init_philos(int argc, char **argv, t_data *data);
+void init_table(char **argv, t_data *data);
+
+//threading function
+void                threading(t_data *data);
+
+//main things
+void    *eat_sleep_think(void *p);
+int exit_with_error(char *str);
+void custom_print(t_philosopher *philo, char *str);
+
+//utils functions
+int	                ft_atoi(const char *str);
+int	                is_number(char *str);
+int	                is_digit(char c);
+int	                ft_strncmp(char *str1, char *str2);
+int	                ft_strlen(const char *str);
+void                better_sleep(int total_ms);
+long                get_time_now(void);
+
+#endif
