@@ -6,7 +6,7 @@
 /*   By: lbisscho <lbisscho@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/15 15:23:59 by lbisscho      #+#    #+#                 */
-/*   Updated: 2022/06/17 10:38:20 by lbisscho      ########   odam.nl         */
+/*   Updated: 2022/06/17 14:50:27 by lbisscho      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,11 +35,16 @@
 typedef struct s_table {
                 long start_time;
                 bool  *locked_forks;
-                pthread_mutex_t *forks;
+                bool dead_bool;
+
+                //threads
                 pthread_t *threads;
                 pthread_t dead;
+
+                //mutexes
+                pthread_mutex_t *forks;
+                pthread_mutex_t last_eaten;
                 pthread_mutex_t dead_mutex;
-                bool dead_bool;
                 pthread_mutex_t write;
 }               t_table;
 

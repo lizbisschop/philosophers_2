@@ -6,7 +6,7 @@
 /*   By: lbisscho <lbisscho@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/15 16:16:30 by lbisscho      #+#    #+#                 */
-/*   Updated: 2022/06/17 11:10:46 by lbisscho      ########   odam.nl         */
+/*   Updated: 2022/06/17 15:10:18 by lbisscho      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,8 @@ void join_threads(t_data *data)
             exit_with_error("pthread join failed");
         i++;
     }
+    if (pthread_join(data->table.dead, NULL) != 0)
+        exit_with_error("pthread join failed");
 }
 
 void threading(t_data *data)
@@ -57,12 +59,12 @@ void threading(t_data *data)
     i = 0;
     while (i < data->total_philos)
     {
-        if (pthread_create(&(data->table.threads[i]), NULL, eat_sleep_think,
+        if (pthread_create(&(data->table.threads[i]), NULL, &eat_sleep_think,
 				(void *)&(data->philos[i])) != 0)
             exit_with_error("thread creation failed");
         i++;
     }
-    if (pthread_create(&(data->table.dead), NULL, dead, data) != 0)
+    if (pthread_create(&(data->table.dead), NULL, &dead, data) != 0)
         exit_with_error("thread creation failed");
     join_threads(data);
     destroy(data);
