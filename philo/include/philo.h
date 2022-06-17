@@ -6,7 +6,7 @@
 /*   By: lbisscho <lbisscho@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/15 15:23:59 by lbisscho      #+#    #+#                 */
-/*   Updated: 2022/06/16 15:26:45 by lbisscho      ########   odam.nl         */
+/*   Updated: 2022/06/17 10:38:20 by lbisscho      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,26 @@
 # include <sys/time.h>
 #include <unistd.h>
 
+//remove!!!
+# include <errno.h>
+#include <string.h>
+
+#define ANSI_COLOR_RED     "\x1b[31m"
+#define ANSI_COLOR_GREEN   "\x1b[32m"
+#define ANSI_COLOR_YELLOW  "\x1b[33m"
+#define ANSI_COLOR_BLUE    "\x1b[34m"
+#define ANSI_COLOR_MAGENTA "\x1b[35m"
+#define ANSI_COLOR_CYAN    "\x1b[36m"
+#define ANSI_COLOR_RESET   "\x1b[0m"
+
 typedef struct s_table {
                 long start_time;
                 bool  *locked_forks;
                 pthread_mutex_t *forks;
                 pthread_t *threads;
+                pthread_t dead;
+                pthread_mutex_t dead_mutex;
+                bool dead_bool;
                 pthread_mutex_t write;
 }               t_table;
 
@@ -41,9 +56,7 @@ typedef struct s_philosopher {
                 int times_eaten;
                 long last_time_eaten;
                 long start_time;
-                bool times_to_eat_bool;
-                bool dead;
-                
+                bool times_to_eat_bool;                
 }               t_philosopher;
 
 
@@ -65,6 +78,8 @@ void                threading(t_data *data);
 void    *eat_sleep_think(void *p);
 int exit_with_error(char *str);
 void custom_print(t_philosopher *philo, char *str);
+void *dead(void* d);
+bool check_dead(t_philosopher *philo);
 
 //utils functions
 int	                ft_atoi(const char *str);
@@ -74,5 +89,6 @@ int	                ft_strncmp(char *str1, char *str2);
 int	                ft_strlen(const char *str);
 void                better_sleep(int total_ms);
 long                get_time_now(void);
+char	*ft_strnstr(const char *haystack, const char *needle, size_t len);
 
 #endif

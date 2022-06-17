@@ -6,7 +6,7 @@
 /*   By: lbisscho <lbisscho@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/15 16:03:30 by lbisscho      #+#    #+#                 */
-/*   Updated: 2022/06/16 15:16:53 by lbisscho      ########   odam.nl         */
+/*   Updated: 2022/06/17 10:57:09 by lbisscho      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 
 void set_philo_info(t_philosopher *philo, int argc, char **argv)
 {
-    philo->dead = false;
     philo->total_philos = ft_atoi(argv[1]);
     philo->time_die = ft_atoi(argv[2]);
     philo->time_eat = ft_atoi(argv[3]);
     philo->time_sleep = ft_atoi(argv[4]);
+    philo->last_time_eaten = philo->tab->start_time;
     //if times to eat is defined
     if (argc == 6)
     {

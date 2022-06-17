@@ -6,13 +6,13 @@
 #    By: lbisscho <lbisscho@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/01/19 10:24:00 by lbisscho      #+#    #+#                  #
-#    Updated: 2022/06/16 14:36:52 by lbisscho      ########   odam.nl          #
+#    Updated: 2022/06/16 15:40:09 by lbisscho      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = philo
 
-SRCS =  main.c init_philo.c init_table.c threading.c utils.c utils_2.c eat_sleep_think.c custom_print.c
+SRCS =  main.c init_philo.c init_table.c threading.c utils.c utils_2.c eat_sleep_think.c custom_print.c dead.c
 
 OBJ = $(SRCS:.c=.o)
 
