@@ -6,7 +6,7 @@
 /*   By: lbisscho <lbisscho@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/15 16:10:44 by lbisscho      #+#    #+#                 */
-/*   Updated: 2022/06/17 15:00:19 by lbisscho      ########   odam.nl         */
+/*   Updated: 2022/06/29 14:19:46 by lbisscho      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ void init_table(char **argv, t_data *data)
 
     i = 0;
     data->total_philos = ft_atoi(argv[1]);
+    if (data->total_philos < 0)
+        exit_with_error("Wrong input");
     data->table.dead_bool = false;
     data->table.forks = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t) * data->total_philos + 1);
     data->table.threads = (pthread_t *)malloc(sizeof(pthread_t) * data->total_philos + 1);
