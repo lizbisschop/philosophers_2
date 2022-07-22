@@ -6,7 +6,7 @@
 /*   By: lbisscho <lbisscho@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/15 16:03:30 by lbisscho      #+#    #+#                 */
-/*   Updated: 2022/06/17 15:25:27 by lbisscho      ########   odam.nl         */
+/*   Updated: 2022/07/22 15:17:28 by lbisscho      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,13 +35,15 @@ void set_philo_info(t_philosopher *philo, int argc, char **argv)
         philo->left_fork = philo->philo_id - 1;
 }
 
-void init_philos(int argc, char **argv, t_data *data)
+int init_philos(int argc, char **argv, t_data *data)
 {
     int i;
 
     i = 0;
     data->total_philos = ft_atoi(argv[1]);
     data->philos = (t_philosopher *)malloc(sizeof(t_philosopher) * data->total_philos + 1);
+    if (!data->philos)
+        return (handle_error("Malloc failed"));
     while (i < data->total_philos)
     {
         data->philos[i].tab = &data->table;
@@ -50,4 +52,5 @@ void init_philos(int argc, char **argv, t_data *data)
         // printf("philo id = %d | time_die = %d | time_eat = %d | time_sleep = %d | left_fork = %d | right_fork = %d\n", data->philos[i].philo_id, data->philos[i].time_die, data->philos[i].time_eat, data->philos[i].time_sleep, data->philos[i].left_fork, data->philos[i].right_fork);
         i++;
     }
+    return (0);
 }

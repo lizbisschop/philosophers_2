@@ -6,7 +6,7 @@
 /*   By: lbisscho <lbisscho@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/15 15:23:59 by lbisscho      #+#    #+#                 */
-/*   Updated: 2022/07/22 13:43:21 by lbisscho      ########   odam.nl         */
+/*   Updated: 2022/07/22 15:18:12 by lbisscho      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,9 @@
 #define ANSI_COLOR_MAGENTA "\x1b[35m"
 #define ANSI_COLOR_CYAN    "\x1b[36m"
 #define ANSI_COLOR_RESET   "\x1b[0m"
+
+#define FAIL -1
+#define SUCCES 1
 
 typedef struct s_table {
                 long start_time;
@@ -74,15 +77,15 @@ typedef struct s_data {
 }               t_data;
 
 //initilizing functions
-void init_philos(int argc, char **argv, t_data *data);
-void init_table(char **argv, t_data *data);
+int init_philos(int argc, char **argv, t_data *data);
+int init_table(char **argv, t_data *data);
 
 //threading function
-void                threading(t_data *data);
+int                threading(t_data *data);
 
 //main things
 void    *eat_sleep_think(void *p);
-int exit_with_error(t_philosopher *philo, char *str);
+int handle_error(char *str);
 void custom_print(t_philosopher *philo, char *str);
 void *dead(void* d);
 bool check_dead(t_philosopher *philo);

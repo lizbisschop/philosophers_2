@@ -6,7 +6,7 @@
 /*   By: lbisscho <lbisscho@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/16 15:38:24 by lbisscho      #+#    #+#                 */
-/*   Updated: 2022/07/22 14:17:40 by lbisscho      ########   odam.nl         */
+/*   Updated: 2022/07/22 15:26:11 by lbisscho      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,13 @@ void *dead(void* d)
             pthread_mutex_lock(&data->table.last_eaten);
             if (time - data->philos[i].last_time_eaten > data->philos[i].time_die)
             {
+                if (data->philos[i].times_to_eat_bool == true && data->philos[i].times_eaten == data->philos[i].times_to_eat)
+                {
+                    pthread_mutex_unlock(&data->table.last_eaten);
+                    return (0);
+                }
                 pthread_mutex_lock(&data->table.dead_mutex);
-                // printf("id of dying philo = %d | time since last eaten = %li\n", data->philos[i].philo_id, time - data->philos[i].last_time_eaten);
+                printf("id of dying philo = %d | time since last eaten = %li | Times eaten = %d\n", data->philos[i].philo_id, time - data->philos[i].last_time_eaten, data->philos[i].times_to_eat);
                 custom_print(&data->philos[i], "died");
                 data->table.dead_bool = true;
                 pthread_mutex_unlock(&data->table.last_eaten);
