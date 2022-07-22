@@ -6,7 +6,7 @@
 /*   By: lbisscho <lbisscho@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/15 15:23:59 by lbisscho      #+#    #+#                 */
-/*   Updated: 2022/06/17 14:50:27 by lbisscho      ########   odam.nl         */
+/*   Updated: 2022/07/22 13:43:21 by lbisscho      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 
 //remove!!!
 # include <errno.h>
-#include <string.h>
+# include <string.h>
 
 #define ANSI_COLOR_RED     "\x1b[31m"
 #define ANSI_COLOR_GREEN   "\x1b[32m"
@@ -61,7 +61,8 @@ typedef struct s_philosopher {
                 int times_eaten;
                 long last_time_eaten;
                 long start_time;
-                bool times_to_eat_bool;                
+                bool times_to_eat_bool;
+                bool error_occured;          
 }               t_philosopher;
 
 
@@ -81,7 +82,7 @@ void                threading(t_data *data);
 
 //main things
 void    *eat_sleep_think(void *p);
-int exit_with_error(char *str);
+int exit_with_error(t_philosopher *philo, char *str);
 void custom_print(t_philosopher *philo, char *str);
 void *dead(void* d);
 bool check_dead(t_philosopher *philo);

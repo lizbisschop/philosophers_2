@@ -6,7 +6,7 @@
 /*   By: lbisscho <lbisscho@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/16 14:36:08 by lbisscho      #+#    #+#                 */
-/*   Updated: 2022/06/29 13:08:14 by lbisscho      ########   odam.nl         */
+/*   Updated: 2022/07/22 14:19:44 by lbisscho      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,7 @@ void custom_print(t_philosopher *philo, char *str)
     long time;
     
     time = get_time_now();
-    if (pthread_mutex_lock(&philo->tab->write) != 0)
-        exit_with_error("write lock failed");
+    pthread_mutex_lock(&philo->tab->write);
     // if (ft_strnstr(str, "fork", ft_strlen(str)) != 0)
     //     printf(ANSI_COLOR_GREEN);
     // else if (ft_strnstr(str, "eating", ft_strlen(str)) != 0)
@@ -33,7 +32,6 @@ void custom_print(t_philosopher *philo, char *str)
     if (ft_strnstr(str, "eating", ft_strlen(str)))
         printf(" %d", philo->times_eaten);
     printf("\n");
-    if (pthread_mutex_unlock(&philo->tab->write) != 0)
-        exit_with_error("unlock lock failed");
+    pthread_mutex_unlock(&philo->tab->write);
     // printf(ANSI_COLOR_RESET);
 }

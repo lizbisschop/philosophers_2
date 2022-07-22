@@ -6,7 +6,7 @@
 /*   By: lbisscho <lbisscho@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/15 16:57:23 by lbisscho      #+#    #+#                 */
-/*   Updated: 2022/06/17 15:19:51 by lbisscho      ########   odam.nl         */
+/*   Updated: 2022/07/22 14:15:40 by lbisscho      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,22 +16,18 @@ bool    eat(t_philosopher *philo)
 {
     philo->times_eaten++;
     custom_print(philo, "is eating");
-    if (pthread_mutex_lock(&philo->tab->last_eaten) != 0)
-        exit_with_error("locking last eaten mutex failed");
+    pthread_mutex_lock(&philo->tab->last_eaten);
     philo->last_time_eaten = get_time_now();
-    if (pthread_mutex_unlock(&philo->tab->last_eaten) != 0)
-        exit_with_error("locking last eaten mutex failed");
+    pthread_mutex_unlock(&philo->tab->last_eaten);
     better_sleep(philo->time_eat);
     if (check_dead(philo) == true)
         return (false);
     philo->tab->locked_forks[philo->left_fork - 1] = false;
-    if (pthread_mutex_unlock(&philo->tab->forks[philo->left_fork - 1]) != 0)
-        exit_with_error("unlocking left fork failed");
+    pthread_mutex_unlock(&philo->tab->forks[philo->left_fork - 1]);
     if (check_dead(philo) == true)
         return (false);
     philo->tab->locked_forks[philo->right_fork - 1] = false;
-    if (pthread_mutex_unlock(&philo->tab->forks[philo->right_fork - 1]) != 0)
-        exit_with_error("unlocking right fork failed");
+    pthread_mutex_unlock(&philo->tab->forks[philo->right_fork - 1]);
     if (check_dead(philo) == true)
         return (false);
     return (true); 
@@ -39,16 +35,14 @@ bool    eat(t_philosopher *philo)
 
 bool    grab_forks(t_philosopher *philo)
 {
-    if (pthread_mutex_lock(&philo->tab->forks[philo->left_fork - 1]) != 0)          
-        exit_with_error("locking left fork failed");
+    pthread_mutex_lock(&philo->tab->forks[philo->left_fork - 1]);
     philo->tab->locked_forks[philo->left_fork - 1] = true;
     if (check_dead(philo) == true)
         return (false);
     custom_print(philo, "has taken fork[l]");
     if (philo->total_philos == 1)
         return (false);
-    if (pthread_mutex_lock(&philo->tab->forks[philo->right_fork - 1]) != 0)
-        exit_with_error("locking right fork failed");
+    pthread_mutex_lock(&philo->tab->forks[philo->right_fork - 1]);
     philo->tab->locked_forks[philo->right_fork - 1] = true;
     if (check_dead(philo) == true)
         return (false);
