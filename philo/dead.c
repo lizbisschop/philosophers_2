@@ -6,7 +6,7 @@
 /*   By: lbisscho <lbisscho@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/16 15:38:24 by lbisscho      #+#    #+#                 */
-/*   Updated: 2022/07/22 15:26:11 by lbisscho      ########   odam.nl         */
+/*   Updated: 2022/07/22 17:05:15 by lbisscho      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void *dead(void* d)
                     return (0);
                 }
                 pthread_mutex_lock(&data->table.dead_mutex);
-                printf("id of dying philo = %d | time since last eaten = %li | Times eaten = %d\n", data->philos[i].philo_id, time - data->philos[i].last_time_eaten, data->philos[i].times_to_eat);
+                // printf("id of dying philo = %d | time since last eaten = %li | Times eaten = %d\n", data->philos[i].philo_id, time - data->philos[i].last_time_eaten, data->philos[i].times_to_eat);
                 custom_print(&data->philos[i], "died");
                 data->table.dead_bool = true;
                 pthread_mutex_unlock(&data->table.last_eaten);

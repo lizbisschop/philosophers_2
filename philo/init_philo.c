@@ -6,13 +6,13 @@
 /*   By: lbisscho <lbisscho@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/15 16:03:30 by lbisscho      #+#    #+#                 */
-/*   Updated: 2022/07/22 15:17:28 by lbisscho      ########   odam.nl         */
+/*   Updated: 2022/07/22 17:11:28 by lbisscho      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "include/philo.h"
 
-void set_philo_info(t_philosopher *philo, int argc, char **argv)
+int set_philo_info(t_philosopher *philo, int argc, char **argv)
 {
     philo->total_philos = ft_atoi(argv[1]);
     philo->time_die = ft_atoi(argv[2]);
@@ -20,10 +20,14 @@ void set_philo_info(t_philosopher *philo, int argc, char **argv)
     philo->time_sleep = ft_atoi(argv[4]);
     philo->last_time_eaten = philo->tab->start_time;
     philo->times_eaten = 0;
+    if (philo->time_die < 0 || philo->time_eat < 0 || philo->time_sleep < 0 || philo->total_philos < 0)
+        return (FAIL);
     //if times to eat is defined
     if (argc == 6)
     {
         philo->times_to_eat = ft_atoi(argv[5]);
+        if (philo->times_to_eat < 0)
+            return (FAIL);
         philo->times_to_eat_bool = true;
     }
     else
@@ -33,6 +37,7 @@ void set_philo_info(t_philosopher *philo, int argc, char **argv)
         philo->left_fork = philo->total_philos;
     else
         philo->left_fork = philo->philo_id - 1;
+    return (0);
 }
 
 int init_philos(int argc, char **argv, t_data *data)
@@ -48,7 +53,8 @@ int init_philos(int argc, char **argv, t_data *data)
     {
         data->philos[i].tab = &data->table;
         data->philos[i].philo_id = i + 1;
-        set_philo_info(&data->philos[i], argc, argv);
+        if (set_philo_info(&data->philos[i], argc, argv) == FAIL)
+            return (handle_error("Wrong input"));
         // printf("philo id = %d | time_die = %d | time_eat = %d | time_sleep = %d | left_fork = %d | right_fork = %d\n", data->philos[i].philo_id, data->philos[i].time_die, data->philos[i].time_eat, data->philos[i].time_sleep, data->philos[i].left_fork, data->philos[i].right_fork);
         i++;
     }
