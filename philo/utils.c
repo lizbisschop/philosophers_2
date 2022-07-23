@@ -6,7 +6,7 @@
 /*   By: lbisscho <lbisscho@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/19 10:24:27 by lbisscho      #+#    #+#                 */
-/*   Updated: 2022/06/16 12:19:16 by lbisscho      ########   odam.nl         */
+/*   Updated: 2022/07/23 13:45:49 by lbisscho      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,6 @@ int	ft_strncmp(char *str1, char *str2)
 int	is_digit(char c)
 {
 	return (c >= 48 && c <= 57);
-	// if (c < 48 || c > 57)
-	// 	return (0);
-	// else
-	// 	return (1);
 }
 
 int	is_number(char *str)
