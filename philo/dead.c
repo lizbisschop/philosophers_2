@@ -6,7 +6,7 @@
 /*   By: lbisscho <lbisscho@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/16 15:38:24 by lbisscho      #+#    #+#                 */
-/*   Updated: 2022/07/23 14:46:02 by lbisscho      ########   odam.nl         */
+/*   Updated: 2022/07/23 16:06:21 by lbisscho      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,6 @@ bool	check_dead(t_philosopher *philo)
 
 int	dying_philo(t_data *data, int i)
 {
-	if (data->philos[i].times_to_eat_bool == true
-		&& data->philos[i].times_eaten
-		== data->philos[i].times_to_eat)
-	{
-		pthread_mutex_unlock(&data->table.last_eaten);
-		return (0);
-	}
 	pthread_mutex_lock(&data->table.dead_mutex);
 	custom_print(&data->philos[i], "died");
 	data->table.dead_bool = true;
@@ -60,15 +53,24 @@ void	*dead(void *d)
 		{
 			time = get_time_now();
 			pthread_mutex_lock(&data->table.last_eaten);
+			if (data->philos[i].times_to_eat_bool == true
+				&& data->philos[i].times_eaten
+				>= data->philos[i].times_to_eat)
+			{
+				pthread_mutex_unlock(&data->table.last_eaten);
+				return (0);
+			}
 			if (time - data->philos[i].last_time_eaten
 				> data->philos[i].time_die)
 			{
 				dying_philo(data, i);
+				printf("id of dying philo = %d | time since last eaten = %li | Times eaten = %d\n", data->philos[i].philo_id, time - data->philos[i].last_time_eaten, data->philos[i].times_to_eat);
 				return (0);
 			}
 			pthread_mutex_unlock(&data->table.last_eaten);
 			i++;
 		}
+		usleep(75);
 	}
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: lbisscho <lbisscho@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/15 16:03:30 by lbisscho      #+#    #+#                 */
-/*   Updated: 2022/07/23 13:41:22 by lbisscho      ########   odam.nl         */
+/*   Updated: 2022/07/23 16:08:50 by lbisscho      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	set_philo_info(t_philosopher *philo, int argc, char **argv)
 	philo->time_die = ft_atoi(argv[2]);
 	philo->time_eat = ft_atoi(argv[3]);
 	philo->time_sleep = ft_atoi(argv[4]);
-	philo->last_time_eaten = philo->tab->start_time;
+	// philo->last_time_eaten = philo->tab->start_time;
 	philo->times_eaten = 0;
 	if (philo->time_die < 0 || philo->time_eat < 0
 		|| philo->time_sleep < 0 || philo->total_philos < 0)
@@ -50,6 +50,7 @@ int	init_philos(int argc, char **argv, t_data *data)
 			* data->total_philos + 1);
 	if (!data->philos)
 		return (handle_error("Malloc failed"));
+	// data->start_time = get_time_now();
 	while (i < data->total_philos)
 	{
 		data->philos[i].tab = &data->table;

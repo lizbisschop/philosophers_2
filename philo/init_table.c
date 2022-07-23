@@ -6,7 +6,7 @@
 /*   By: lbisscho <lbisscho@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/15 16:10:44 by lbisscho      #+#    #+#                 */
-/*   Updated: 2022/07/23 13:42:14 by lbisscho      ########   odam.nl         */
+/*   Updated: 2022/07/23 16:10:29 by lbisscho      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,6 @@ int	init_table(char **argv, t_data *data)
 		data->table.locked_forks[i] = false;
 		i++;
 	}
-	data->table.start_time = get_time_now();
 	mutex_init(data);
 	return (0);
 }

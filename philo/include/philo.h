@@ -6,7 +6,7 @@
 /*   By: lbisscho <lbisscho@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/15 15:23:59 by lbisscho      #+#    #+#                 */
-/*   Updated: 2022/07/23 13:23:36 by lbisscho      ########   odam.nl         */
+/*   Updated: 2022/07/23 16:10:55 by lbisscho      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ typedef struct s_philosopher {
 	int		times_to_eat;
 	int		times_eaten;
 	long	last_time_eaten;
-	long	start_time;
+	// long	start_time;
 	bool	times_to_eat_bool;
 	bool	error_occured;
 }	t_philosopher;
@@ -60,7 +60,7 @@ typedef struct s_data {
 	t_philosopher	*philos;
 	t_table			table;
 	int				total_philos;
-	int				start_time;
+	// int				start_time;
 }	t_data;
 
 int		init_philos(int argc, char **argv, t_data *data);

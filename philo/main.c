@@ -6,7 +6,7 @@
 /*   By: lbisscho <lbisscho@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/15 15:23:43 by lbisscho      #+#    #+#                 */
-/*   Updated: 2022/07/23 13:43:28 by lbisscho      ########   odam.nl         */
+/*   Updated: 2022/07/23 15:58:37 by lbisscho      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ int	main_function(int argc, char **argv)
 
 	if (argc != 5 && argc != 6)
 		return (handle_error("Error: wrong number of arguments"));
-	data.start_time = get_time_now();
 	if (init_table(argv, &data) == FAIL)
 		return (0);
 	if (init_philos(argc, argv, &data) == FAIL)
