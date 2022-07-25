@@ -6,7 +6,7 @@
 /*   By: lbisscho <lbisscho@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/15 16:57:23 by lbisscho      #+#    #+#                 */
-/*   Updated: 2022/07/25 13:53:56 by lbisscho      ########   odam.nl         */
+/*   Updated: 2022/07/25 16:55:31 by lbisscho      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,38 +15,54 @@
 bool	eat(t_philosopher *philo)
 {
 	philo->times_eaten++;
-	custom_print(philo, "is eating");
-	better_sleep(philo->time_eat);
+	if (custom_print(philo, "is eating") == true)
+	{
+		// printf("eating is going wronggggg with philo %d\n", philo->philo_id);
+		return (false);
+	}
 	pthread_mutex_lock(&philo->tab->last_eaten);
 	philo->last_time_eaten = get_time_now();
 	pthread_mutex_unlock(&philo->tab->last_eaten);
-	if (check_dead(philo) == true)
-		return (false);
-	philo->tab->locked_forks[philo->left_fork] = false;
+	better_sleep(philo->time_eat);
+	// if (check_dead(philo) == true)
+	// 	return (false);
+	// philo->tab->locked_forks[philo->left_fork] = false;
 	pthread_mutex_unlock(&philo->tab->forks[philo->left_fork]);
-	if (check_dead(philo) == true)
-		return (false);
-	philo->tab->locked_forks[philo->right_fork] = false;
+	// if (check_dead(philo) == true)
+		// return (false);
+	// philo->tab->locked_forks[philo->right_fork] = false;
 	pthread_mutex_unlock(&philo->tab->forks[philo->right_fork]);
-	if (check_dead(philo) == true)
-		return (false);
+	// if (check_dead(philo) == true)
+		// return (false);
 	return (true);
 }
 
 bool	grab_forks(t_philosopher *philo)
 {
+	// printf("we are all just waiting to float here %d\n", philo->philo_id);
 	pthread_mutex_lock(&philo->tab->forks[philo->left_fork]);
-	philo->tab->locked_forks[philo->left_fork] = true;
-	if (check_dead(philo) == true)
+	// printf("we passed the wait list %d\n", philo->philo_id);
+	// philo->tab->locked_forks[philo->left_fork] = true;
+	// if (check_dead(philo) == true)
+	// 	return (false);
+	if (custom_print(philo, "has taken a fork[l]") == true)
+	{
+		// printf("custom print taking fork [l] went wrong\n");
 		return (false);
-	custom_print(philo, "has taken a fork[l]");
+	}
 	if (philo->total_philos == 1)
 		return (false);
+	// printf("we are all just waiting to float here %d\n", philo->philo_id);
 	pthread_mutex_lock(&philo->tab->forks[philo->right_fork]);
-	philo->tab->locked_forks[philo->right_fork] = true;
-	if (check_dead(philo) == true)
+	// printf("we passed the wait list %d\n", philo->philo_id);
+	// philo->tab->locked_forks[philo->right_fork] = true;
+	// if (check_dead(philo) == true)
+		// return (false);
+	if (custom_print(philo, "has taken a fork[r]") == true)
+	{
+		// printf("custom print taking fork[r] went wrong\n");	
 		return (false);
-	custom_print(philo, "has taken a fork[r]");
+	}
 	return (true);
 }
 
@@ -62,18 +78,28 @@ void	*eat_sleep_think(void *p)
 	{
 		if (grab_forks(philo) == false)
 			break ;
-		if (check_dead(philo) == true)
-			break ;
+		// if (check_dead(philo) == true)
+		// 	break ;
 		if (eat(philo) == false)
 			break ;
-		if (check_dead(philo) == true || (philo->times_eaten
-				== philo->times_to_eat && philo->times_to_eat_bool == true))
+		if ((philo->times_eaten	== philo->times_to_eat
+				&& philo->times_to_eat_bool == true))
 			break ;
-		custom_print(philo, "is sleeping");
+		if (custom_print(philo, "is sleeping") == true)
+		{
+			// printf("something went wrong with sleeping\n");
+			break ;
+		}
 		better_sleep(philo->time_sleep);
-		if (check_dead(philo) == true)
+		// if (check_dead(philo) == true)
+		// 	break ;
+		if (custom_print(philo, "is thinking") == true)
+		{
+			// printf("something went wrong with thinking\n");
 			break ;
-		custom_print(philo, "is thinking");
+		}
+		// printf("finish thinking\n");
 	}
+	// printf("hhhhaaaaallllooooooo\n");
 	return (NULL);
 }

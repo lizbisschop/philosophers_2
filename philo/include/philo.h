@@ -6,7 +6,7 @@
 /*   By: lbisscho <lbisscho@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/15 15:23:59 by lbisscho      #+#    #+#                 */
-/*   Updated: 2022/07/23 16:10:55 by lbisscho      ########   odam.nl         */
+/*   Updated: 2022/07/25 16:35:17 by lbisscho      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ typedef struct s_table {
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	last_eaten;
 	pthread_mutex_t	dead_mutex;
-	pthread_mutex_t	write;
+	// pthread_mutex_t	write;
 }	t_table;
 
 typedef struct s_philosopher {
@@ -69,7 +69,7 @@ int		threading(t_data *data);
 
 void	*eat_sleep_think(void *p);
 int		handle_error(char *str);
-void	custom_print(t_philosopher *philo, char *str);
+bool	custom_print(t_philosopher *philo, char *str);
 void	*dead(void *d);
 bool	check_dead(t_philosopher *philo);
 

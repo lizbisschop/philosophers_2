@@ -6,7 +6,7 @@
 /*   By: lbisscho <lbisscho@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/15 16:16:30 by lbisscho      #+#    #+#                 */
-/*   Updated: 2022/07/25 14:14:03 by lbisscho      ########   odam.nl         */
+/*   Updated: 2022/07/25 16:37:29 by lbisscho      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@ int	destroy(t_data *data)
 			return (handle_error("destroying fork mutex failed"));
 		i++;
 	}
-	if (pthread_mutex_destroy(&data->table.write) != 0)
-		return (handle_error("destroying write mutex failed"));
+	// if (pthread_mutex_destroy(&data->table.write) != 0)
+	// 	return (handle_error("destroying write mutex failed"));
 	if (pthread_mutex_destroy(&data->table.dead_mutex) != 0)
 		return (handle_error("destroying dead mutex failed"));
 	return (0);
@@ -71,7 +71,7 @@ int	threading(t_data *data)
 	}
 	if (pthread_create(&(data->table.dead), NULL, &dead, data) != 0)
 		return (handle_error("thread creation failed"));
-	join_threads(data);
+	join_threads(data);	
 	destroy(data);
 	return (0);
 }
