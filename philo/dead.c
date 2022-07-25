@@ -6,7 +6,7 @@
 /*   By: lbisscho <lbisscho@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/16 15:38:24 by lbisscho      #+#    #+#                 */
-/*   Updated: 2022/07/23 16:06:21 by lbisscho      ########   odam.nl         */
+/*   Updated: 2022/07/25 13:31:42 by lbisscho      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,10 @@ bool	check_dead(t_philosopher *philo)
 	{
 		//TODO: don't unlock mutexes that are already unlocked
 		pthread_mutex_unlock(&philo->tab->dead_mutex);
-		if (philo->tab->locked_forks[philo->left_fork - 1] == true)
-			pthread_mutex_unlock(&philo->tab->forks[philo->left_fork - 1]);
-		if (philo->tab->locked_forks[philo->right_fork - 1] == true)
-			pthread_mutex_unlock(&philo->tab->forks[philo->right_fork - 1]);
+		if (philo->tab->locked_forks[philo->left_fork] == true)
+			pthread_mutex_unlock(&philo->tab->forks[philo->left_fork]);
+		if (philo->tab->locked_forks[philo->right_fork] == true)
+			pthread_mutex_unlock(&philo->tab->forks[philo->right_fork]);
 		return (true);
 	}
 	pthread_mutex_unlock(&philo->tab->dead_mutex);
@@ -65,12 +65,13 @@ void	*dead(void *d)
 			{
 				dying_philo(data, i);
 				printf("id of dying philo = %d | time since last eaten = %li | Times eaten = %d\n", data->philos[i].philo_id, time - data->philos[i].last_time_eaten, data->philos[i].times_to_eat);
+				pthread_mutex_unlock(&data->table.last_eaten);
 				return (0);
 			}
 			pthread_mutex_unlock(&data->table.last_eaten);
 			i++;
 		}
-		usleep(75);
+		// usleep(75);
 	}
 	return (0);
 }

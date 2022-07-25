@@ -6,7 +6,7 @@
 /*   By: lbisscho <lbisscho@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/15 16:03:30 by lbisscho      #+#    #+#                 */
-/*   Updated: 2022/07/23 16:08:50 by lbisscho      ########   odam.nl         */
+/*   Updated: 2022/07/25 13:49:42 by lbisscho      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,11 @@ int	set_philo_info(t_philosopher *philo, int argc, char **argv)
 	}
 	else
 		philo->times_to_eat_bool = false;
-	philo->right_fork = philo->philo_id;
+	philo->right_fork = philo->philo_id - 1;
 	if (philo->philo_id == 1)
-		philo->left_fork = philo->total_philos;
+		philo->left_fork = philo->total_philos - 1;
 	else
-		philo->left_fork = philo->philo_id - 1;
+		philo->left_fork = (philo->philo_id - 1) - 1;
 	return (0);
 }
 
@@ -47,7 +47,7 @@ int	init_philos(int argc, char **argv, t_data *data)
 	i = 0;
 	data->total_philos = ft_atoi(argv[1]);
 	data->philos = (t_philosopher *)malloc(sizeof(t_philosopher)
-			* data->total_philos + 1);
+			* data->total_philos);
 	if (!data->philos)
 		return (handle_error("Malloc failed"));
 	// data->start_time = get_time_now();

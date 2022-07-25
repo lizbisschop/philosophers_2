@@ -6,7 +6,7 @@
 /*   By: lbisscho <lbisscho@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/15 16:57:23 by lbisscho      #+#    #+#                 */
-/*   Updated: 2022/07/23 13:16:41 by lbisscho      ########   odam.nl         */
+/*   Updated: 2022/07/25 13:53:56 by lbisscho      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,18 +16,18 @@ bool	eat(t_philosopher *philo)
 {
 	philo->times_eaten++;
 	custom_print(philo, "is eating");
+	better_sleep(philo->time_eat);
 	pthread_mutex_lock(&philo->tab->last_eaten);
 	philo->last_time_eaten = get_time_now();
 	pthread_mutex_unlock(&philo->tab->last_eaten);
-	better_sleep(philo->time_eat);
 	if (check_dead(philo) == true)
 		return (false);
-	philo->tab->locked_forks[philo->left_fork - 1] = false;
-	pthread_mutex_unlock(&philo->tab->forks[philo->left_fork - 1]);
+	philo->tab->locked_forks[philo->left_fork] = false;
+	pthread_mutex_unlock(&philo->tab->forks[philo->left_fork]);
 	if (check_dead(philo) == true)
 		return (false);
-	philo->tab->locked_forks[philo->right_fork - 1] = false;
-	pthread_mutex_unlock(&philo->tab->forks[philo->right_fork - 1]);
+	philo->tab->locked_forks[philo->right_fork] = false;
+	pthread_mutex_unlock(&philo->tab->forks[philo->right_fork]);
 	if (check_dead(philo) == true)
 		return (false);
 	return (true);
@@ -35,18 +35,18 @@ bool	eat(t_philosopher *philo)
 
 bool	grab_forks(t_philosopher *philo)
 {
-	pthread_mutex_lock(&philo->tab->forks[philo->left_fork - 1]);
-	philo->tab->locked_forks[philo->left_fork - 1] = true;
+	pthread_mutex_lock(&philo->tab->forks[philo->left_fork]);
+	philo->tab->locked_forks[philo->left_fork] = true;
 	if (check_dead(philo) == true)
 		return (false);
-	custom_print(philo, "has taken fork[l]");
+	custom_print(philo, "has taken a fork[l]");
 	if (philo->total_philos == 1)
 		return (false);
-	pthread_mutex_lock(&philo->tab->forks[philo->right_fork - 1]);
-	philo->tab->locked_forks[philo->right_fork - 1] = true;
+	pthread_mutex_lock(&philo->tab->forks[philo->right_fork]);
+	philo->tab->locked_forks[philo->right_fork] = true;
 	if (check_dead(philo) == true)
 		return (false);
-	custom_print(philo, "has taken fork[r]");
+	custom_print(philo, "has taken a fork[r]");
 	return (true);
 }
 

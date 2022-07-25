@@ -6,7 +6,7 @@
 /*   By: lbisscho <lbisscho@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/15 16:10:44 by lbisscho      #+#    #+#                 */
-/*   Updated: 2022/07/23 16:10:29 by lbisscho      ########   odam.nl         */
+/*   Updated: 2022/07/25 13:50:02 by lbisscho      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,11 +42,11 @@ int	init_table(char **argv, t_data *data)
 		return (handle_error("Wrong input"));
 	data->table.dead_bool = false;
 	data->table.forks = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t)
-			* data->total_philos + 1);
+			* data->total_philos);
 	data->table.threads = (pthread_t *)malloc(sizeof(pthread_t)
-			* data->total_philos + 1);
+			* data->total_philos);
 	data->table.locked_forks = (bool *)malloc(sizeof(bool)
-			* data->total_philos + 1);
+			* data->total_philos);
 	if (!data->table.forks || !data->table.threads || !data->table.locked_forks)
 		return (handle_error("malloc failed"));
 	while (i < data->total_philos)
