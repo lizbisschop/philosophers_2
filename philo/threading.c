@@ -6,7 +6,7 @@
 /*   By: lbisscho <lbisscho@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/15 16:16:30 by lbisscho      #+#    #+#                 */
-/*   Updated: 2022/07/25 14:01:36 by lbisscho      ########   odam.nl         */
+/*   Updated: 2022/07/25 14:14:03 by lbisscho      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,11 @@ int	threading(t_data *data)
 	while (i < data->total_philos)
 	{
 		data->philos[i].last_time_eaten = data->table.start_time;
+		i++;
+	}
+	i = 0;
+	while (i < data->total_philos)
+	{
 		if (pthread_create(&(data->table.threads[i]), NULL, &eat_sleep_think,
 				(void *)&(data->philos[i])) != 0)
 			return (handle_error("thread creation failed"));
