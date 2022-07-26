@@ -6,7 +6,7 @@
 /*   By: lbisscho <lbisscho@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/15 16:16:30 by lbisscho      #+#    #+#                 */
-/*   Updated: 2022/07/26 12:19:03 by lbisscho      ########   odam.nl         */
+/*   Updated: 2022/07/26 14:34:39 by lbisscho      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ int	threading(t_data *data)
 				(void *)&(data->philos[i])) != 0)
 			return (handle_error("thread creation failed"));
 		i++;
+		usleep(250);
 	}
 	if (pthread_create(&(data->table.dead), NULL, &dead, data) != 0)
 		return (handle_error("thread creation failed"));

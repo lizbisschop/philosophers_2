@@ -6,7 +6,7 @@
 /*   By: lbisscho <lbisscho@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/15 15:23:59 by lbisscho      #+#    #+#                 */
-/*   Updated: 2022/07/26 12:18:49 by lbisscho      ########   odam.nl         */
+/*   Updated: 2022/07/26 14:41:19 by lbisscho      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 # include <string.h>
 
 # define FAIL -1
-# define SUCCES 1
+# define SUCCESS 1
 
 typedef struct s_table {
 	long			start_time;

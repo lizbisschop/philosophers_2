@@ -6,7 +6,7 @@
 /*   By: lbisscho <lbisscho@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/16 15:38:24 by lbisscho      #+#    #+#                 */
-/*   Updated: 2022/07/26 12:33:48 by lbisscho      ########   odam.nl         */
+/*   Updated: 2022/07/26 14:51:48 by lbisscho      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 bool	check_dead(t_philosopher *philo)
 {
-	// printf("%d\n", pthread_mutex_trylock(&philo->tab->dead_mutex));
 	pthread_mutex_lock(&philo->tab->dead_mutex);
 	if (philo->tab->dead_bool == true)
 	{
@@ -27,7 +26,6 @@ bool	check_dead(t_philosopher *philo)
 			pthread_mutex_unlock(&philo->tab->forks[philo->right_fork]);
 		return (true);
 	}
-	// printf("NObody died yettt\n");
 	pthread_mutex_unlock(&philo->tab->dead_mutex);
 	return (false);
 }
@@ -37,7 +35,6 @@ int	dying_philo(t_data *data, int i)
 	custom_print(&data->philos[i], "died");
 	pthread_mutex_lock(&data->table.dead_mutex);
 	data->table.dead_bool = true;
-	// pthread_mutex_unlock(&data->table.last_eaten);
 	pthread_mutex_unlock(&data->table.dead_mutex);
 	return (0);
 }
@@ -55,13 +52,11 @@ void	*dead(void *d)
 		while (i < data->total_philos)
 		{
 			time = get_time_now();
+			// race condition
 			if (data->philos[i].times_to_eat_bool == true
 				&& data->philos[i].times_eaten
 				>= data->philos[i].times_to_eat)
-			// {
-				// pthread_mutex_unlock(&data->table.last_eaten);
 				return (0);
-			// }
 			pthread_mutex_lock(&data->table.last_eaten);
 			if (time - data->philos[i].last_time_eaten
 				> data->philos[i].time_die)
@@ -72,10 +67,9 @@ void	*dead(void *d)
 				return (0);
 			}
 			pthread_mutex_unlock(&data->table.last_eaten);
-			// printf("value of i = %d\n", i);
 			i++;
 		}
-		// usleep(250);
+		usleep(250);
 	}
 	return (0);
 }
