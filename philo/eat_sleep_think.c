@@ -6,7 +6,7 @@
 /*   By: lbisscho <lbisscho@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/15 16:57:23 by lbisscho      #+#    #+#                 */
-/*   Updated: 2022/07/25 16:55:31 by lbisscho      ########   odam.nl         */
+/*   Updated: 2022/07/26 12:42:49 by lbisscho      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ void	*eat_sleep_think(void *p)
 
 	philo = p;
 	if (philo->philo_id % 2 == 0)
-		usleep(75);
+		usleep(200);
 	while (!(philo->times_eaten == philo->times_to_eat
 			&& philo->times_to_eat_bool == true))
 	{

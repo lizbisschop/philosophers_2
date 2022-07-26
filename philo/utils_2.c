@@ -6,7 +6,7 @@
 /*   By: lbisscho <lbisscho@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/19 10:24:23 by lbisscho      #+#    #+#                 */
-/*   Updated: 2022/07/25 17:22:53 by lbisscho      ########   odam.nl         */
+/*   Updated: 2022/07/26 12:46:11 by lbisscho      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,5 +54,5 @@ void	better_sleep(int total_ms)
 
 	begin = get_time_now();
 	while ((get_time_now() - begin) < total_ms)
-		usleep(250);
+		usleep(75);
 }

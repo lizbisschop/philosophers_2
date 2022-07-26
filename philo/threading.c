@@ -6,7 +6,7 @@
 /*   By: lbisscho <lbisscho@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/15 16:16:30 by lbisscho      #+#    #+#                 */
-/*   Updated: 2022/07/25 16:37:29 by lbisscho      ########   odam.nl         */
+/*   Updated: 2022/07/26 12:19:03 by lbisscho      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@ int	destroy(t_data *data)
 			return (handle_error("destroying fork mutex failed"));
 		i++;
 	}
-	// if (pthread_mutex_destroy(&data->table.write) != 0)
-	// 	return (handle_error("destroying write mutex failed"));
+	if (pthread_mutex_destroy(&data->table.write) != 0)
+		return (handle_error("destroying write mutex failed"));
 	if (pthread_mutex_destroy(&data->table.dead_mutex) != 0)
 		return (handle_error("destroying dead mutex failed"));
 	return (0);

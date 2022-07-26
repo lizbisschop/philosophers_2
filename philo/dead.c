@@ -6,7 +6,7 @@
 /*   By: lbisscho <lbisscho@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/16 15:38:24 by lbisscho      #+#    #+#                 */
-/*   Updated: 2022/07/25 17:31:44 by lbisscho      ########   odam.nl         */
+/*   Updated: 2022/07/26 12:33:48 by lbisscho      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ bool	check_dead(t_philosopher *philo)
 	pthread_mutex_lock(&philo->tab->dead_mutex);
 	if (philo->tab->dead_bool == true)
 	{
+		// printf("left fork %d | right_fork %d| philo id = %d\n", pthread_mutex_trylock(&philo->tab->forks[philo->left_fork]), pthread_mutex_trylock(&philo->tab->forks[philo->right_fork]), philo->philo_id);
 		//TODO: don't unlock mutexes that are already unlocked
 		pthread_mutex_unlock(&philo->tab->dead_mutex);
 		// if (philo->tab->locked_forks[philo->left_fork] == true)
@@ -74,7 +75,7 @@ void	*dead(void *d)
 			// printf("value of i = %d\n", i);
 			i++;
 		}
-		usleep(250);
+		// usleep(250);
 	}
 	return (0);
 }
