@@ -6,7 +6,7 @@
 /*   By: lbisscho <lbisscho@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/15 15:23:59 by lbisscho      #+#    #+#                 */
-/*   Updated: 2022/07/26 14:41:19 by lbisscho      ########   odam.nl         */
+/*   Updated: 2022/07/28 13:53:55 by lbisscho      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,6 @@
 # include <stdbool.h>
 # include <sys/time.h>
 # include <unistd.h>
-
-//remove!!!
-# include <errno.h>
-# include <string.h>
 
 # define FAIL -1
 # define SUCCESS 1
@@ -51,7 +47,6 @@ typedef struct s_philosopher {
 	int		times_to_eat;
 	int		times_eaten;
 	long	last_time_eaten;
-	// long	start_time;
 	bool	times_to_eat_bool;
 	bool	error_occured;
 }	t_philosopher;
@@ -60,19 +55,16 @@ typedef struct s_data {
 	t_philosopher	*philos;
 	t_table			table;
 	int				total_philos;
-	// int				start_time;
 }	t_data;
 
 int		init_philos(int argc, char **argv, t_data *data);
 int		init_table(char **argv, t_data *data);
 int		threading(t_data *data);
-
 void	*eat_sleep_think(void *p);
 int		handle_error(char *str);
 bool	custom_print(t_philosopher *philo, char *str);
 void	*dead(void *d);
 bool	check_dead(t_philosopher *philo);
-
 int		ft_atoi(const char *str);
 int		is_number(char *str);
 int		is_digit(char c);

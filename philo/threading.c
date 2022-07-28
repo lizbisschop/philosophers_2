@@ -6,7 +6,7 @@
 /*   By: lbisscho <lbisscho@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/15 16:16:30 by lbisscho      #+#    #+#                 */
-/*   Updated: 2022/07/26 14:34:39 by lbisscho      ########   odam.nl         */
+/*   Updated: 2022/07/28 13:56:42 by lbisscho      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,17 +20,15 @@ int	destroy(t_data *data)
 	i = 0;
 	while (i < data->total_philos)
 	{
-		if (data->table.locked_forks[i] == true)
-			pthread_mutex_unlock(&data->table.forks[i]);
 		ret = pthread_mutex_destroy(&data->table.forks[i]);
 		if (ret != 0)
-			return (handle_error("destroying fork mutex failed"));
+			return (handle_error("Error: destroying fork mutex failed"));
 		i++;
 	}
 	if (pthread_mutex_destroy(&data->table.write) != 0)
-		return (handle_error("destroying write mutex failed"));
+		return (handle_error("Error: destroying write mutex failed"));
 	if (pthread_mutex_destroy(&data->table.dead_mutex) != 0)
-		return (handle_error("destroying dead mutex failed"));
+		return (handle_error("Error: destroying dead mutex failed"));
 	return (0);
 }
 
@@ -42,11 +40,11 @@ int	join_threads(t_data *data)
 	while (i < data->total_philos)
 	{
 		if (pthread_join(data->table.threads[i], NULL) != 0)
-			return (handle_error("pthread join failed"));
+			return (handle_error("Error: pthread join failed"));
 		i++;
 	}
 	if (pthread_join(data->table.dead, NULL) != 0)
-		return (handle_error("pthread join failed"));
+		return (handle_error("Error: pthread join failed"));
 	return (0);
 }
 
@@ -66,13 +64,13 @@ int	threading(t_data *data)
 	{
 		if (pthread_create(&(data->table.threads[i]), NULL, &eat_sleep_think,
 				(void *)&(data->philos[i])) != 0)
-			return (handle_error("thread creation failed"));
+			return (handle_error("Error: thread creation failed"));
 		i++;
 		usleep(250);
 	}
 	if (pthread_create(&(data->table.dead), NULL, &dead, data) != 0)
 		return (handle_error("thread creation failed"));
-	join_threads(data);	
+	join_threads(data);
 	destroy(data);
 	return (0);
 }

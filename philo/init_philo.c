@@ -6,7 +6,7 @@
 /*   By: lbisscho <lbisscho@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/15 16:03:30 by lbisscho      #+#    #+#                 */
-/*   Updated: 2022/07/25 13:49:42 by lbisscho      ########   odam.nl         */
+/*   Updated: 2022/07/28 13:52:52 by lbisscho      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ int	set_philo_info(t_philosopher *philo, int argc, char **argv)
 	philo->time_die = ft_atoi(argv[2]);
 	philo->time_eat = ft_atoi(argv[3]);
 	philo->time_sleep = ft_atoi(argv[4]);
-	// philo->last_time_eaten = philo->tab->start_time;
 	philo->times_eaten = 0;
 	if (philo->time_die < 0 || philo->time_eat < 0
 		|| philo->time_sleep < 0 || philo->total_philos < 0)
@@ -49,14 +48,13 @@ int	init_philos(int argc, char **argv, t_data *data)
 	data->philos = (t_philosopher *)malloc(sizeof(t_philosopher)
 			* data->total_philos);
 	if (!data->philos)
-		return (handle_error("Malloc failed"));
-	// data->start_time = get_time_now();
+		return (handle_error("Error: Malloc failed"));
 	while (i < data->total_philos)
 	{
 		data->philos[i].tab = &data->table;
 		data->philos[i].philo_id = i + 1;
 		if (set_philo_info(&data->philos[i], argc, argv) == FAIL)
-			return (handle_error("Wrong input"));
+			return (handle_error("Error: Wrong input"));
 		i++;
 	}
 	return (0);
