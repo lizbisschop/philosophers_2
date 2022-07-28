@@ -6,7 +6,7 @@
 /*   By: lbisscho <lbisscho@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/15 16:57:23 by lbisscho      #+#    #+#                 */
-/*   Updated: 2022/07/28 14:00:05 by lbisscho      ########   odam.nl         */
+/*   Updated: 2022/07/28 16:46:40 by lbisscho      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ bool	eat(t_philosopher *philo)
 	philo->times_eaten++;
 	philo->last_time_eaten = get_time_now();
 	pthread_mutex_unlock(&philo->tab->last_eaten);
-	better_sleep(philo->time_eat);
+	if (better_sleep(philo->time_eat, philo) == false)
+		return (false);
 	pthread_mutex_unlock(&philo->tab->forks[philo->left_fork]);
 	pthread_mutex_unlock(&philo->tab->forks[philo->right_fork]);
 	return (true);
@@ -61,7 +62,8 @@ void	*eat_sleep_think(void *p)
 			break ;
 		if (custom_print(philo, "is sleeping") == true)
 			break ;
-		better_sleep(philo->time_sleep);
+		if (better_sleep(philo->time_sleep, philo) == false)
+			break ;
 		if (custom_print(philo, "is thinking") == true)
 			break ;
 	}

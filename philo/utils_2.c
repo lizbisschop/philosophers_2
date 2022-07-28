@@ -6,7 +6,7 @@
 /*   By: lbisscho <lbisscho@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/19 10:24:23 by lbisscho      #+#    #+#                 */
-/*   Updated: 2022/07/26 14:36:55 by lbisscho      ########   odam.nl         */
+/*   Updated: 2022/07/28 17:15:55 by lbisscho      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,11 +48,22 @@ long	get_time_now(void)
 	return (time.tv_sec * 1000 + time.tv_usec / 1000);
 }
 
-void	better_sleep(int total_ms)
+bool	better_sleep(int total_ms, t_philosopher *philo)
 {
 	long	begin;
+	int		i;
 
+	i = 0;
 	begin = get_time_now();
 	while ((get_time_now() - begin) < total_ms)
+	{
+		if (i % 10000 == 0)
+		{
+			if (check_dead(philo))
+				return (false);
+		}
 		usleep(250);
+	}
+	(void)philo;
+	return (true);
 }

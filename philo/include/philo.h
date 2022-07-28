@@ -6,7 +6,7 @@
 /*   By: lbisscho <lbisscho@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/15 15:23:59 by lbisscho      #+#    #+#                 */
-/*   Updated: 2022/07/28 13:53:55 by lbisscho      ########   odam.nl         */
+/*   Updated: 2022/07/28 16:45:17 by lbisscho      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ int		is_number(char *str);
 int		is_digit(char c);
 int		ft_strncmp(char *str1, char *str2);
 int		ft_strlen(const char *str);
-void	better_sleep(int total_ms);
+bool	better_sleep(int total_ms, t_philosopher *philo);
 long	get_time_now(void);
 char	*ft_strnstr(const char *haystack, const char *needle, size_t len);
 
