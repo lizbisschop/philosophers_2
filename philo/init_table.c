@@ -6,7 +6,7 @@
 /*   By: lbisscho <lbisscho@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/15 16:10:44 by lbisscho      #+#    #+#                 */
-/*   Updated: 2022/08/03 12:55:50 by lbisscho      ########   odam.nl         */
+/*   Updated: 2022/08/03 13:16:09 by lbisscho      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,8 @@ int	init_table(char **argv, t_data *data)
 
 	i = 0;
 	data->total_philos = ft_atoi(argv[1]);
-	// if (data->total_philos > 200)
-	// 	return (handle_error("Error: philo count cannot be higher then 200"));
+	if (data->total_philos > 200)
+		return (handle_error("Error: philo count cannot be higher then 200"));
 	if (data->total_philos <= 0)
 		return (handle_error("Error: Wrong input"));
 	data->table.dead_bool = false;

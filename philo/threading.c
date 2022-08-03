@@ -6,7 +6,7 @@
 /*   By: lbisscho <lbisscho@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/15 16:16:30 by lbisscho      #+#    #+#                 */
-/*   Updated: 2022/08/03 12:58:12 by lbisscho      ########   odam.nl         */
+/*   Updated: 2022/08/03 13:15:27 by lbisscho      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,14 +67,8 @@ int	threading(t_data *data)
 	{
 		if (pthread_create(&(data->table.threads[i]), NULL, &eat_sleep_think,
 				(void *)&(data->philos[i])) != 0)
-		{
-			pthread_mutex_lock(&data->table.dead_mutex);
-			data->table.dead_bool = true;
-			pthread_mutex_unlock(&data->table.dead_mutex);
 			return (handle_error("Error: thread creation failed"));
-		}
 		i++;
-		// usleep(75);
 	}
 	pthread_mutex_unlock(&data->table.starting);
 	if (pthread_create(&(data->table.dead), NULL, &dead, data) != 0)
