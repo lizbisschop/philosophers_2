@@ -6,7 +6,7 @@
 /*   By: lbisscho <lbisscho@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/15 16:16:30 by lbisscho      #+#    #+#                 */
-/*   Updated: 2022/07/28 16:31:53 by lbisscho      ########   odam.nl         */
+/*   Updated: 2022/08/03 12:58:12 by lbisscho      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ int	destroy(t_data *data)
 		return (handle_error("Error: destroying write mutex failed"));
 	if (pthread_mutex_destroy(&data->table.dead_mutex) != 0)
 		return (handle_error("Error: destroying dead mutex failed"));
+	if (pthread_mutex_destroy(&data->table.starting) != 0)
+		return (handle_error("Error: destroying starting mutex failed"));
 	return (0);
 }
 
@@ -60,16 +62,23 @@ int	threading(t_data *data)
 		i++;
 	}
 	i = 0;
+	pthread_mutex_lock(&data->table.starting);
 	while (i < data->total_philos)
 	{
 		if (pthread_create(&(data->table.threads[i]), NULL, &eat_sleep_think,
 				(void *)&(data->philos[i])) != 0)
+		{
+			pthread_mutex_lock(&data->table.dead_mutex);
+			data->table.dead_bool = true;
+			pthread_mutex_unlock(&data->table.dead_mutex);
 			return (handle_error("Error: thread creation failed"));
+		}
 		i++;
-		usleep(250);
+		// usleep(75);
 	}
+	pthread_mutex_unlock(&data->table.starting);
 	if (pthread_create(&(data->table.dead), NULL, &dead, data) != 0)
-		return (handle_error("thread creation failed"));
+		return (handle_error("Error: thread creation failed"));
 	join_threads(data);
 	destroy(data);
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: lbisscho <lbisscho@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/15 16:57:23 by lbisscho      #+#    #+#                 */
-/*   Updated: 2022/07/28 16:46:40 by lbisscho      ########   odam.nl         */
+/*   Updated: 2022/08/03 12:59:41 by lbisscho      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ bool	eat(t_philosopher *philo)
 
 bool	grab_forks(t_philosopher *philo)
 {
+	if (check_dead(philo) == true)
+		return (false);
 	pthread_mutex_lock(&philo->tab->forks[philo->left_fork]);
 	if (custom_print(philo, "has taken a fork[l]") == true)
 		return (false);
@@ -48,6 +50,8 @@ void	*eat_sleep_think(void *p)
 	t_philosopher	*philo;
 
 	philo = p;
+	pthread_mutex_lock(&philo->tab->starting);
+	pthread_mutex_unlock(&philo->tab->starting);
 	if (philo->philo_id % 2 == 0)
 		usleep(500);
 	while (!(philo->times_eaten == philo->times_to_eat

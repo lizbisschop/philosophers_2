@@ -6,7 +6,7 @@
 /*   By: lbisscho <lbisscho@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/15 15:23:59 by lbisscho      #+#    #+#                 */
-/*   Updated: 2022/07/28 16:45:17 by lbisscho      ########   odam.nl         */
+/*   Updated: 2022/08/03 12:55:04 by lbisscho      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ typedef struct s_table {
 	pthread_mutex_t	last_eaten;
 	pthread_mutex_t	dead_mutex;
 	pthread_mutex_t	write;
+	pthread_mutex_t	starting;
 }	t_table;
 
 typedef struct s_philosopher {

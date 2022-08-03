@@ -6,7 +6,7 @@
 /*   By: lbisscho <lbisscho@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/15 15:23:43 by lbisscho      #+#    #+#                 */
-/*   Updated: 2022/07/28 16:36:25 by lbisscho      ########   odam.nl         */
+/*   Updated: 2022/08/03 12:06:39 by lbisscho      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ void	free_stuff(t_data *data)
 		free(data->table.threads);
 	if (data->philos)
 		free(data->philos);
+	(void)data;
 }
 
 int	main(int argc, char **argv)
